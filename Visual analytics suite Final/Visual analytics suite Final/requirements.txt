@@ -1,0 +1,9 @@
+# Office build: talks to an OpenAI-compatible Qwen2.5-VL server (base URL + API key)
+streamlit>=1.50
+pillow>=10.1
+numpy>=1.26
+pandas>=2.1
+opencv-python-headless>=4.8
+plotly>=5.20
+requests>=2.31
+python-dotenv>=1.0
