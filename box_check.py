@@ -16,9 +16,14 @@ import math
 import os
 import re
 
-import requests
-from dotenv import load_dotenv
-from PIL import Image
+try:
+    import requests
+    from dotenv import load_dotenv
+    from PIL import Image
+except ImportError as exc:  # usually: the virtual environment is not activated
+    print(f"ERROR: {exc}\nActivate the project's virtual environment first:  .\\.venv\\Scripts\\Activate.ps1")
+    input("\nPress Enter to close this window...")
+    raise SystemExit(1)
 
 load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
 URL = os.getenv("VAS_API_BASE_URL", "http://localhost:8000/v1").rstrip("/")
@@ -85,4 +90,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as exc:  # noqa: BLE001 - show the problem instead of closing the window
+        print(f"\nERROR: {type(exc).__name__}: {exc}")
+    input("\nPress Enter to close this window...")
