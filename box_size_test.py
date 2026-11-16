@@ -166,9 +166,9 @@ if st.button("Run test", type="primary", disabled=not (url and model and sizes))
 
     table = pd.DataFrame(rows)
     if text_tokens is not None:  # tiles the model really got = server tokens - text tokens
-        table["tiles model really got"] = [t - text_tokens if isinstance(t, (int, float)) else None
+        table["tiles model really got"] = [int(t - text_tokens) if pd.notna(t) else None
                                            for t in table["prompt tokens (server)"]]
-        table["server resized?"] = ["YES" if got is not None and got != sent else "no"
+        table["server resized?"] = ["?" if pd.isna(got) else "YES" if got != sent else "no"
                                     for got, sent in zip(table["tiles model really got"], table["tiles in image sent"])]
     first = ["image", "method", "sent", "overlap circle", "overlap square", "server resized?"]
     table = table[[c for c in first if c in table] + [c for c in table if c not in first]]
